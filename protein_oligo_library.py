@@ -387,14 +387,21 @@ def get_taxid_from_name( in_name ):
     return return_name
 
 
-def get_species_from_file( in_file ):
+def get_taxdata_from_file( in_file ):
+    """
+        Reads taxonomic data from a lineage file, where
+        the first element is the taxonomic id, and the rest
+        of the information is delimited by the '|' character
+    
+        :param in_file: input file to read
+
+        :returns: dictionary with taxID:data key, value pairs
+    """
     open_file = open( in_file, 'r' )
     taxid_dict = {}
 
     for line in open_file:
         line = line.split( '|' )
-        taxID = line[ 0 ].strip()
-        species = line[ 1 ].strip()
 
         if taxID not in taxid_dict:
             taxid_dict[ int( taxID ) ] = list()
