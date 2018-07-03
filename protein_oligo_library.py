@@ -423,3 +423,25 @@ def get_taxdata_from_file( in_file ):
     open_file.close()
 
     return taxid_dict
+
+def group_seq_from_taxid( sequence_ids, taxonomic_data, rank ):
+   """
+       Assigns a list of sequence ids to that of their current
+       taxonomic rank
+
+       :param sequence_ids: a list/set of sequence ids 
+       :param taxonomic_data: a dictionary of taxid: rank list to reference
+       :param rank: integer current rank to regard
+   
+       :returns: dictionary of id:rank data pairs
+   """
+   output = {}
+   for item in sequence_ids:
+       item = int( item ) 
+       current_rank = taxonomic_data[ item ][ rank ]
+       if current_rank:
+           output[ item ] = current_rank
+   return output
+           
+
+
