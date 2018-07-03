@@ -424,7 +424,7 @@ def get_taxdata_from_file( in_file ):
 
     return taxid_dict
 
-def group_seq_from_taxid( sequence_ids, taxonomic_data, rank ):
+def group_seq_from_taxid( sequence_ids, merged_ids,taxonomic_data, rank ):
    """
        Assigns a list of sequence ids to that of their current
        taxonomic rank
@@ -438,13 +438,12 @@ def group_seq_from_taxid( sequence_ids, taxonomic_data, rank ):
    output = {}
    for item in sequence_ids:
        item = int( item ) 
+       if item in merged_ids:
+           item = merged_ids[ item ] 
+           
        if item not in taxonomic_data:
-           if item not in output:
-               output[ item ] = list()
            output[ item ] = "NoID"
-
        else:
-                  
            current_rank = taxonomic_data[ item ][ rank ]
            if current_rank:
                output[ item ] = current_rank
