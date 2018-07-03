@@ -213,7 +213,7 @@ def append_suffix( string, start, end ):
 
 
 def subset_lists_iter( sequence, window_size, step_size ):
-    xmer_set= set()
+    xmer_set = set()
 
     start = 0
     end = window_size
