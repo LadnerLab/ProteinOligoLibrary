@@ -1,5 +1,18 @@
 #!/usr/bin/env python3
-   
+from enum import Enum
+
+class Rank( Enum ):
+    SUPERKINGDOM = 9
+    KINGDOM = 8
+    PHYLUM = 7
+    CLASS = 6
+    ORDER = 5
+    FAMILY = 4
+    GENUS = 3
+    SPECIES = 2
+    TAX_NAME = 1
+
+  
 def read_fasta_lists( file_to_read ):
     """
        Reads a list of fastas from file_to_read
@@ -402,10 +415,11 @@ def get_taxdata_from_file( in_file ):
 
     for line in open_file:
         line = line.split( '|' )
+        line = [ item.strip() for item in line ]
 
-        if taxID not in taxid_dict:
-            taxid_dict[ int( taxID ) ] = list()
-        taxid_dict[ taxID ].append( species )
+        taxID = int( line[ 0 ] )
+
+        taxid_dict[ taxID ] = line[ 1:: ]
     open_file.close()
 
     return taxid_dict
