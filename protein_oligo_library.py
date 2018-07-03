@@ -438,9 +438,16 @@ def group_seq_from_taxid( sequence_ids, taxonomic_data, rank ):
    output = {}
    for item in sequence_ids:
        item = int( item ) 
-       current_rank = taxonomic_data[ item ][ rank ]
-       if current_rank:
-           output[ item ] = current_rank
+       if item not in taxonomic_data:
+           if item not in output:
+               output[ item ] = list()
+           output[ item ] = "NoID"
+
+       else:
+                  
+           current_rank = taxonomic_data[ item ][ rank ]
+           if current_rank:
+               output[ item ] = current_rank
    return output
            
 
