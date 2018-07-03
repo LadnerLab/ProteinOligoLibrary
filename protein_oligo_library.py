@@ -2,15 +2,15 @@
 from enum import Enum
 
 class Rank( Enum ):
-    SUPERKINGDOM = 9
-    KINGDOM = 8
-    PHYLUM = 7
-    CLASS = 6
-    ORDER = 5
-    FAMILY = 4
-    GENUS = 3
-    SPECIES = 2
-    TAX_NAME = 1
+    SUPERKINGDOM = 8
+    KINGDOM = 7
+    PHYLUM = 6
+    CLASS = 5
+    ORDER = 4
+    FAMILY = 3
+    GENUS = 2
+    SPECIES = 1
+    TAX_NAME = 0
 
   
 def read_fasta_lists( file_to_read ):
@@ -390,7 +390,7 @@ def get_taxid_from_name( in_name ):
     split_name = in_name.split( 'TaxID=' )
 
     # uniprot naming convention
-    if len( split_name == 1 ):
+    if len( split_name ) == 1:
         split_name = in_name.split( 'OX=' )
 
     return_name = None
