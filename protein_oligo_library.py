@@ -219,6 +219,8 @@ def subset_lists_iter( sequence, window_size, step_size ):
     start = 0
     end = window_size
 
+    if len( sequence ) < window_size:
+        xmer_set.add( sequence )
     while end <= len( sequence ):
         xmer = sequence[ start:end ]
 
@@ -358,7 +360,7 @@ def create_distance_matrix_of_sequences( sequence_list, window_size, step_size, 
         
 
 
-def sort_sequences_by_length( names_list, sequence_list ):
+def sort_sequences_by_length( names_list, sequence_list, key = 'descending' ):
     sequence_dict = {}
 
     out_names = list()
@@ -368,15 +370,25 @@ def sort_sequences_by_length( names_list, sequence_list ):
         current_seq = sequence_list[ index ]
         current_name = names_list[ index ]
 
-        sequence_dict[ current_seq ] = current_name
+        if current_seq not in sequence_dict:
+            sequence_dict[ current_seq ] = list()
+        sequence_dict[ current_seq ].append( current_name )
 
     out_seqs = sorted( list( sequence_dict.keys() ), key = len ) 
 
+    other_out = out_seqs.copy()
     for item in range( len( out_seqs ) ):
         current_item = out_seqs[ item ]
-        out_names.append( sequence_dict[ current_item ] )
+        for current_name in range( len( sequence_dict[ current_item ] ) ):
+            out_names.append( sequence_dict[ current_item ][ current_name ] )
+            if current_name > 0:
+                other_out.insert( item, current_item )
 
-    return out_names, out_seqs
+    if key == 'descending':
+        other_out = list( reversed( out_seqs ) )
+        out_names = list( reversed( out_names ) )
+
+    return out_names, other_out
 
 def get_taxid_from_name( in_name ):
     """
