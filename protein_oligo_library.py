@@ -440,6 +440,7 @@ def group_seq_from_taxid( sequence_ids, merged_ids,taxonomic_data, rank ):
    for item in sequence_ids:
        item = int( item ) 
        rank_num = rank
+
        if item in merged_ids:
            item = merged_ids[ item ] 
            
@@ -447,7 +448,7 @@ def group_seq_from_taxid( sequence_ids, merged_ids,taxonomic_data, rank ):
            output[ item ] = "NoID"
        else:
            current_rank = taxonomic_data[ item ][ rank ]
-           while current_rank == '' and rank_num > 0:
+           while not current_rank and rank_num > 0:
                rank_num -= 1
                current_rank = taxonomic_data[ item ][ rank_num ]
            output[ item ] = current_rank
