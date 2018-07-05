@@ -51,6 +51,7 @@ def write_fastas( names_list, sequence_list, output_name="out.txt" ):
         Writes a fasta file from a list of names and sequences to output file provided
 
     """
+    output_name = output_name.replace( "/", "_" )
     out_file = open( output_name, 'w' )
     for index in range( len( names_list ) ):
         out_file.write( '>' + names_list[ index ] + '\n' + 
@@ -438,6 +439,7 @@ def group_seq_from_taxid( sequence_ids, merged_ids,taxonomic_data, rank ):
    output = {}
    for item in sequence_ids:
        item = int( item ) 
+       rank_num = rank
        if item in merged_ids:
            item = merged_ids[ item ] 
            
@@ -445,9 +447,9 @@ def group_seq_from_taxid( sequence_ids, merged_ids,taxonomic_data, rank ):
            output[ item ] = "NoID"
        else:
            current_rank = taxonomic_data[ item ][ rank ]
-           while not current_rank and rank > 0:
-               rank -= 1
-               current_rank = taxonomic_data[ item ][ rank ]
+           while current_rank == '' and rank_num > 0:
+               rank_num -= 1
+               current_rank = taxonomic_data[ item ][ rank_num ]
            output[ item ] = current_rank
    return output
            
