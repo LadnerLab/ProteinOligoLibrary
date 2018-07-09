@@ -376,19 +376,18 @@ def sort_sequences_by_length( names_list, sequence_list, key = 'descending' ):
 
     out_seqs = sorted( list( sequence_dict.keys() ), key = len ) 
 
-    other_out = out_seqs.copy()
     for item in range( len( out_seqs ) ):
         current_item = out_seqs[ item ]
         for current_name in range( len( sequence_dict[ current_item ] ) ):
             out_names.append( sequence_dict[ current_item ][ current_name ] )
             if current_name > 0:
-                other_out.insert( item, current_item )
+                out_seqs.append( current_item )
 
     if key == 'descending':
-        other_out = list( reversed( out_seqs ) )
+        out_seqs = list( reversed( out_seqs ) )
         out_names = list( reversed( out_names ) )
 
-    return out_names, other_out
+    return out_names, out_seqs
 
 def get_taxid_from_name( in_name ):
     """
