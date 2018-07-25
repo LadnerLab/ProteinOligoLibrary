@@ -358,6 +358,17 @@ def create_distance_matrix_of_sequences( sequence_list, window_size, step_size, 
     return distance_matrix
 
         
+def get_unique_sequences( names_list, sequence_list ):
+    sequence_dict = {}
+    out_names, out_seqs = list(), list()
+
+    for item in range( len( sequence_list ) ):
+        sequence_dict[ sequence_list[ item ] ] = names_list[ item ]
+
+    for sequence, name in sequence_dict.items():
+        out_names.append( name )
+        out_seqs.append( sequence )
+    return out_names, out_seqs
 
 
 def sort_sequences_by_length( names_list, sequence_list, key = 'descending' ):
