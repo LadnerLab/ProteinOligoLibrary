@@ -51,13 +51,14 @@ def write_fastas( names_list, sequence_list, output_name="out.txt" ):
         Writes a fasta file from a list of names and sequences to output file provided
 
     """
-    output_name = output_name.replace( "/", "_" )
-    out_file = open( output_name, 'w' )
-    for index in range( len( names_list ) ):
-        out_file.write( '>' + names_list[ index ] + '\n' + 
-                        sequence_list[ index ] + '\n'
-                      )
-    out_file.close()
+    if len( names_list ) > 0:
+        output_name = output_name.replace( "/", "_" )
+        out_file = open( output_name, 'w' )
+        for index in range( len( names_list ) ):
+            out_file.write( '>' + names_list[ index ] + '\n' + 
+                            sequence_list[ index ] + '\n'
+                          )
+        out_file.close()
         
 
 def char_in_string( test_string, character ):
