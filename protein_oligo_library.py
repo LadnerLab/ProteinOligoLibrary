@@ -2,15 +2,16 @@
 from enum import Enum
 
 class Rank( Enum ):
+    NO_RANK      = 9
     SUPERKINGDOM = 8
-    KINGDOM = 7
-    PHYLUM = 6
-    CLASS = 5
-    ORDER = 4
-    FAMILY = 3
-    GENUS = 2
-    SPECIES = 1
-    TAX_NAME = 0
+    KINGDOM      = 7
+    PHYLUM       = 6
+    CLASS        = 5
+    ORDER        = 4
+    FAMILY       = 3
+    GENUS        = 2
+    SPECIES      = 1
+    TAX_NAME     = 0
 
   
 def read_fasta_lists( file_to_read ):
