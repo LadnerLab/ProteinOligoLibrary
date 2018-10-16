@@ -47,6 +47,14 @@ def read_fasta_lists( file_to_read ):
 
     return names, sequences
  
+def sequence_dict_from_file( file_to_read ):
+    names, sequences = read_fasta_lists( file_to_read )
+    out_dict = {}
+
+    for current in range( len( names ) ):
+        out_dict[ names[ current ] ] = sequences[ current ]
+    return out_dict
+
 def write_fastas( names_list, sequence_list, output_name="out.txt" ):
     """
         Writes a fasta file from a list of names and sequences to output file provided
