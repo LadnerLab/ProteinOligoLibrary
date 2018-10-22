@@ -491,7 +491,7 @@ def create_valid_taxids( taxids, missing_id_key ):
     return_set = set()
     for current_item in taxids:
         if int( current_item ) in missing_id_key:
-            return_set.add( str( missing_id_key[ current_item ] ) )
+            return_set.add( str( missing_id_key[ int( current_item ) ] ) )
         else:
             return_set.add( current_item )
 
@@ -527,7 +527,7 @@ def parse_rank_map( file_name ):
 
     return out_dict
 
-def fill_tax_gaps( taxid_dict, tax_dict ):
+def fill_tax_gaps( taxid_dict, gap_dict ):
     """
         Fills the "taxonomic gaps" in a 
         dictionary of taxid: tax_data mappings.
@@ -545,9 +545,9 @@ def fill_tax_gaps( taxid_dict, tax_dict ):
     for id, info in taxid_dict.items():
         id_str = str( id )
 
-        SPECIES = oligo.Rank.SPECIES.value
-        GENUS   = oligo.Rank.GENUS.value
-        FAMILY  = oligo.Rank.FAMILY.value
+        SPECIES = Rank.SPECIES.value
+        GENUS   = Rank.GENUS.value
+        FAMILY  = Rank.FAMILY.value
 
         if id_str in gap_dict:
             if gap_dict[ id_str ] == "SPECIES":
@@ -561,4 +561,4 @@ def fill_tax_gaps( taxid_dict, tax_dict ):
             elif gap_dict[ id_str ] == "FAMILY":
                 taxid_dict[ id ][ FAMILY ] = taxid_dict[ id ][ 0 ]
                 taxid_dict[ id ][ 0 ] = ""
-    return tax_dict
+    return taxid_dict
