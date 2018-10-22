@@ -527,3 +527,38 @@ def parse_rank_map( file_name ):
 
     return out_dict
 
+def fill_tax_gaps( taxid_dict, tax_dict ):
+    """
+        Fills the "taxonomic gaps" in a 
+        dictionary of taxid: tax_data mappings.
+
+        :pre: taxid_dict contains mappings of
+              string taxid: list tax_ranks
+
+        :pre: tax_dict contains dictionary containing
+              mappings of string taxid: RANK_NAME 
+             
+        :post: gaps in taxid_dict are filled, meaning
+               that taxonomic ranks are now stored in their
+               correct, corresponding indices
+    """
+    for id, info in taxid_dict.items():
+        id_str = str( id )
+
+        SPECIES = oligo.Rank.SPECIES.value
+        GENUS   = oligo.Rank.GENUS.value
+        FAMILY  = oligo.Rank.FAMILY.value
+
+        if id_str in gap_dict:
+            if gap_dict[ id_str ] == "SPECIES":
+                taxid_dict[ id ][ SPECIES ] = taxid_dict[ id ][ 0 ]
+                taxid_dict[ id ][ 0 ] = ""
+
+            elif gap_dict[ id_str ] == "GENUS":
+                taxid_dict[ id ][ GENUS ] = taxid_dict[id][0]
+                taxid_dict[ id ][ 0 ] = ""
+
+            elif gap_dict[ id_str ] == "FAMILY":
+                taxid_dict[ id ][ FAMILY ] = taxid_dict[ id ][ 0 ]
+                taxid_dict[ id ][ 0 ] = ""
+    return tax_dict
