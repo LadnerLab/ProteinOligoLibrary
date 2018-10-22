@@ -486,5 +486,14 @@ def group_seq_from_taxid( sequence_ids, merged_ids,taxonomic_data, rank ):
            output[ item ] = current_rank
    return output
            
+def create_valid_taxids( taxids, missing_id_key ):
+    return_set = set()
+    for current_item in taxids:
+        if int( current_item ) in missing_id_key:
+            return_set.add( str( missing_id_key[ current_item ] ) )
+        else:
+            return_set.add( current_item )
+
+    return return_set
 
 
