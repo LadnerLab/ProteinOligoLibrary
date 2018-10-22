@@ -476,7 +476,8 @@ def group_seq_from_taxid( sequence_ids, merged_ids,taxonomic_data, rank ):
        if item in merged_ids:
            item = merged_ids[ item ] 
            
-       if item not in taxonomic_data:
+       if item not in merged_ids and item not in taxonomic_data:
+           print( "Missing id: %d" % item )
            output[ item ] = "NoID"
        else:
            current_rank = taxonomic_data[ item ][ rank ]
@@ -496,4 +497,33 @@ def create_valid_taxids( taxids, missing_id_key ):
 
     return return_set
 
+def parse_rank_map( file_name ):
+    """
+        Parses taxid->rank mappings from a file
+        formatted id|rank for some number of
+        taxids
+
+        :pre: file_name is the string name of 
+              a valid file found on disk
+
+        :post: returns a dictionary of 
+               string taxid: RANK_NAME
+               entries
+    """
+    DELIMITER_CHAR = '|'
+    ID_INDEX       = 0
+    RANK_INDEX     = 1
+
+    out_dict = {}
+    
+    with open( file_name, 'r' ) as map_file:
+        for line in map_file:
+            current_mapping = line.split( DELIMITER_CHAR )
+
+            new_id   = current_mapping[ ID_INDEX ].strip()
+            new_rank = current_mapping[ RANK_INDEX ].strip()
+            
+            out_dict[ new_id ] = new_rank
+
+    return out_dict
 
