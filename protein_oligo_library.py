@@ -470,21 +470,21 @@ def group_seq_from_taxid( sequence_ids, merged_ids,taxonomic_data, rank ):
    """
    output = {}
    for item in sequence_ids:
-       item = int( item ) 
-       rank_num = rank
+       if item:
+           item = int( item ) 
+           rank_num = rank
 
-       if item in merged_ids:
-           item = merged_ids[ item ] 
-           
-       if item not in merged_ids and item not in taxonomic_data:
-           print( "Missing id: %d" % item )
-           output[ item ] = "NoID"
-       else:
-           current_rank = taxonomic_data[ item ][ rank ]
-           while not current_rank and rank_num > 0:
-               rank_num -= 1
-               current_rank = taxonomic_data[ item ][ rank_num ]
-           output[ item ] = current_rank
+           if item in merged_ids:
+               item = merged_ids[ item ] 
+               
+           if item not in merged_ids and item not in taxonomic_data:
+               output[ item ] = "NoID"
+           else:
+               current_rank = taxonomic_data[ item ][ rank ]
+               while not current_rank and rank_num > 0:
+                   rank_num -= 1
+                   current_rank = taxonomic_data[ item ][ rank_num ]
+               output[ item ] = current_rank
    return output
            
 def create_valid_taxids( taxids, missing_id_key ):
@@ -552,13 +552,10 @@ def fill_tax_gaps( taxid_dict, gap_dict ):
         if id_str in gap_dict:
             if gap_dict[ id_str ] == "SPECIES":
                 taxid_dict[ id ][ SPECIES ] = taxid_dict[ id ][ 0 ]
-                taxid_dict[ id ][ 0 ] = ""
 
             elif gap_dict[ id_str ] == "GENUS":
                 taxid_dict[ id ][ GENUS ] = taxid_dict[id][0]
-                taxid_dict[ id ][ 0 ] = ""
 
             elif gap_dict[ id_str ] == "FAMILY":
                 taxid_dict[ id ][ FAMILY ] = taxid_dict[ id ][ 0 ]
-                taxid_dict[ id ][ 0 ] = ""
     return taxid_dict
