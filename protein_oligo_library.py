@@ -246,7 +246,7 @@ def subset_lists_from_list( sequence_list, window_size, step_size ):
     out_set = set()
 
     for seq in sequence_list:
-        out_set |= oligo.subset_lists_iter( seq, window_size, step_size )
+        out_set |= subset_lists_iter( seq, window_size, step_size )
     return out_set
 
 def subset_lists( name, sequence, window_size, step_size ):
