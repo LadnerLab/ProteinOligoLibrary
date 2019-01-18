@@ -242,6 +242,13 @@ def subset_lists_iter( sequence, window_size, step_size ):
 
     return xmer_set
 
+def subset_lists_from_list( sequence_list, window_size, step_size ):
+    out_set = set()
+
+    for seq in sequence_list:
+        out_set |= oligo.subset_lists_iter( seq, window_size, step_size )
+    return out_set
+
 def subset_lists( name, sequence, window_size, step_size ):
    """
        Creates a list of subsets of windowSize size in intervals of stepSize
